@@ -1,4 +1,6 @@
 import requests
+import urllib.request
+import os
 
 def get_pokemon(n):
     pokestat = {}
@@ -30,3 +32,20 @@ def get_pokemon_byName(x):
     pokestat[pokename]['elemental_type'] = r.json()['types'][0]['type']['name']
 
     return pokestat
+
+def download_pokemon_sprite(x: str):
+    '''
+    x: str
+        Name of the pokemon
+    '''
+    pokename = x.lower()
+
+    os.makedirs(f'sprites/{pokename}', exist_ok=True)
+
+    front = f'https://pokemon-sprites.s3.amazonaws.com/{pokename}/front.png'
+    back = f'https://pokemon-sprites.s3.amazonaws.com/{pokename}/back.png'
+    urllib.request.urlretrieve(front, f'sprites/{pokename}/front.png')
+    urllib.request.urlretrieve(back, f'sprites/{pokename}/back.png')
+
+if __name__ == '__main__':
+    download_pokemon_sprite('ivysaur')
