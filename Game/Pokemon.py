@@ -12,7 +12,7 @@ def slow_print(message: str, typing_speed=200):
 
 
 class Pokemon:
-    def __init__(self, hp: int, name: str,
+    def __init__(self, name: str, hp: int,
                  attack: int, defense: int,
                  elemental_type: str, moves: list = None):
         self.hp = hp

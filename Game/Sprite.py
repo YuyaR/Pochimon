@@ -7,11 +7,22 @@ import tempfile
 import urllib.request
 from tqdm import tqdm
 
-class SpriteUploader:
+class FileUploader:
    
-    def get_sprites(self, x):
+    def get_sprites(self, *args):
+        if len(args) > 2:
+            raise ValueError('Please, enter 1 or 2 integers')
+        elif len(args) == 2:
+            x = args[0]
+            y = args[1]
+        elif len(args) == 1:
+            x = 1
+            y = args[0]
+        else:
+            raise ValueError('Please, enter 1 or 2 integers')
+
         with tempfile.TemporaryDirectory() as temp_dir:
-            for i in tqdm(range(1, x + 1)):
+            for i in tqdm(range(x, y + 1)):
 
                 r = requests.get(f'https://pokeapi.co/api/v2/pokemon/{i}')
 
@@ -56,5 +67,5 @@ class SpriteUploader:
         return True
 
 if __name__ == '__main__':
-    uploader = SpriteUploader()
-    uploader.get_sprites(50)
+    uploader = FileUploader()
+    uploader.get_sprites(151, 200)
