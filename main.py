@@ -1,17 +1,21 @@
-from Game import *
+from Game import Pokemon
+from Game import Trainer
+from Game import pokeapi
 
-
-#use pokestat to instantiate
+# use pokestat to instantiate
 pokedex = []
 
-
 pokelist = pokeapi.get_pokemon(11)
-pokelist.update(pokeapi.get_pokemon_byName('pikachu'))
+pokelist.update(pokeapi.get_pokemon('pikachu'))
 
 
 for po in list(pokelist.keys()):
-    pokedex.append(pokemon.Pokemon(po.capitalize(), pokelist[po]['hp'], pokelist[po]['attack'], pokelist[po]['defense'], 'Normal'))
+    hp = pokelist[po]['hp']
+    attack = pokelist[po]['attack']
+    defense = pokelist[po]['defense']
+    pokedex.append(Pokemon.Pokemon(po.capitalize(), hp, attack, defense, 'Normal'))
 
+print(pokedex[1])
 # for obj in pokedex:
 #     print(obj.name)
 
