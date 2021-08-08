@@ -1,14 +1,14 @@
 from botocore.exceptions import ClientError
 import logging
 import boto3
-import botocore
 import requests
 import tempfile
 import urllib.request
 from tqdm import tqdm
 
+
 class FileUploader:
-   
+
     def get_sprites(self, *args):
         if len(args) > 2:
             raise ValueError('Please, enter 1 or 2 integers')
@@ -31,14 +31,19 @@ class FileUploader:
                 front = r.json()['sprites']['front_default']
 
                 urllib.request.urlretrieve(back, f'{temp_dir}/back.png')
-                self.upload_file(f'{temp_dir}/back.png', 'pokemon-sprites', f'{name}/back.png')
+                self.upload_file(f'{temp_dir}/back.png',
+                                 'pokemon-sprites',
+                                 f'{name}/back.png')
+
                 urllib.request.urlretrieve(front, f'{temp_dir}/front.png')
-                self.upload_file(f'{temp_dir}/front.png', 'pokemon-sprites', f'{name}/front.png')
+                self.upload_file(f'{temp_dir}/front.png',
+                                 'pokemon-sprites',
+                                 f'{name}/front.png')
 
     def upload_file(self, file_name, bucket, object_name=None):
         """
         Upload a file to an S3 bucket
-        
+
         Parameters
         ----------
         file_name : str
@@ -51,7 +56,7 @@ class FileUploader:
         Returns
         -------
         bool
-            False if the upload caused an error. True if the upload was successful
+            False if the upload caused an error. True otherwise
         """
         # If S3 object_name was not specified, use file_name
         if object_name is None:
@@ -60,11 +65,12 @@ class FileUploader:
         # Upload the file
         s3_client = boto3.client('s3')
         try:
-            response = s3_client.upload_file(file_name, bucket, object_name)
+            s3_client.upload_file(file_name, bucket, object_name)
         except ClientError as e:
             logging.error(e)
             return False
         return True
+
 
 if __name__ == '__main__':
     uploader = FileUploader()

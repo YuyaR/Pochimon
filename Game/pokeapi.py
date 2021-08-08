@@ -1,10 +1,9 @@
-import os
 from typing import Union
 from typing import Dict
 import requests
-import urllib.request
 
 ROOT = 'https://pokeapi.co/api/v2/pokemon/'
+
 
 def get_pokemon(x: Union[str, int]) -> Dict:
     if isinstance(x, str):
@@ -18,7 +17,7 @@ def get_pokemon(x: Union[str, int]) -> Dict:
     r = requests.get(link)
     pname = r.json()['name']
     pokestat = {pname: {}}
-    
+
     for n in range(0, 3):
         stat = r.json()['stats'][n]['base_stat']
         stat_type = r.json()['stats'][n]['stat']['name']
@@ -28,22 +27,3 @@ def get_pokemon(x: Union[str, int]) -> Dict:
         r.json()['types'][0]['type']['name']
 
     return pokestat
-
-
-def download_pokemon_sprite(x: str) -> None:
-    '''
-    x: str
-        Name of the pokemon
-    '''
-    pokename = x.lower()
-
-    os.makedirs(f'sprites/{pokename}', exist_ok=True)
-
-    front = f'https://pokemon-sprites.s3.amazonaws.com/{pokename}/front.png'
-    back = f'https://pokemon-sprites.s3.amazonaws.com/{pokename}/back.png'
-    urllib.request.urlretrieve(front, f'sprites/{pokename}/front.png')
-    urllib.request.urlretrieve(back, f'sprites/{pokename}/back.png')
-
-
-if __name__ == '__main__':
-    download_pokemon_sprite('ivysaur')

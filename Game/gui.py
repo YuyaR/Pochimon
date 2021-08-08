@@ -29,33 +29,32 @@ def trainer_gui():
         root.destroy()
 
     frame = tk.Frame(root)
-    frame.pack()
     
     attack = tk.Button(frame,
                     text="Attack",
                     width=25,
                     height=3,
                     command=write_attack)
-    attack.pack()
+    attack.grid(column=0, row=0)
     change = tk.Button(frame,
                     text="Change",
                     width=25,
                     height=3,
                     command=write_change)
-    change.pack()
+    change.grid(column=0, row=1)
     items = tk.Button(frame,
                     text="Items",
                     width=25,
                     height=3,
                     command=write_object)
-    items.pack()
+    items.grid(column=1, row=0)
 
     run = tk.Button(frame,
                     text="Run",
                     width=25,
                     height=3,
                     command=quit)
-    run.pack()
+    run.grid(column=1, row=1)
     root.mainloop()
     return val
 
@@ -83,32 +82,31 @@ def attack_gui(moveset: list):
         root.destroy()
         
     frame = tk.Frame(root)
-    frame.pack()
 
     attack = tk.Button(frame,
                     text=moveset[0],
                     width=25,
                     height=3,
                     command=first_move)
-    attack.pack()
+    attack.grid(column=0, row=0)
     change = tk.Button(frame,
                     text=moveset[1],
                     width=25,
                     height=3,
                     command=second_move)
-    change.pack()
+    change.grid(column=0, row=1)
     items = tk.Button(frame,
                     text=moveset[2],
                     width=25,
                     height=3,
                     command=third_move)
-    items.pack()
+    items.grid(column=1, row=0)
 
     run = tk.Button(frame,
                     text=moveset[3],
                     width=25,
                     height=3,
                     command=fourth_move)
-    run.pack()
+    run.grid(column=1, row=1)
     root.mainloop()
     return val
